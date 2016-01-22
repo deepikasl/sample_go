@@ -6,7 +6,7 @@ go:
 env:
   global:
     #- CI_REPORT=shippable/testresults/junit.xml
-    - APP_NAME=gotest1234
+    - APP_NAME=goo123
 
 before_install:
   - export GOPATH=$SHIPPABLE_GOPATH
