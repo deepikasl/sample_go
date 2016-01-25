@@ -6,7 +6,7 @@ go:
 env:
   global:
     #- CI_REPORT=shippable/testresults/junit.xml
-    - APP_NAME=go12
+    #- APP_NAME=go12
 
 before_install:
   - export GOPATH=$SHIPPABLE_GOPATH
@@ -27,8 +27,8 @@ branches:
 before_script:
   - mkdir -p shippable/testresults
   - mkdir -p shippable/codecoverage
-after_success :
-  - git push -f git@heroku.com:$APP_NAME.git master
+#after_success :
+ # - git push -f git@heroku.com:$APP_NAME.git master
 
 script:
   - go test -coverprofile=coverage.txt -covermode count ./
