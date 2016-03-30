@@ -1,24 +1,29 @@
 language: go
 
 go:
-  #- 1.1
-  #- 1.2
+  - 1.1
+  - 1.2
   - 1.3
 
+env:
+  global:
+  - CI_REPORT=shippable/testresults/junit.xml
+  
 build:
   ci:
-   - export GOPATH=$SHIPPABLE_GOPATH
-   - source $HOME/.gvm/scripts/gvm
-   - gvm install go$SHIPPABLE_GO_VERSION
-   - gvm use go$SHIPPABLE_GO_VERSION
-   - go get github.com/t-yuki/gocover-cobertura
-   - go get github.com/onsi/gomega
-   - go get github.com/onsi/ginkgo
-   - go get golang.org/x/tools/cmd/cover
-   - mkdir -p shippable/testresults
-   - mkdir -p shippable/codecoverage
-   - go test -coverprofile=coverage.txt -covermode count ./
-   - $GOPATH/bin/gocover-cobertura < coverage.txt > shippable/codecoverage/coverage.xml
+  - go get -v gopkg.in/yaml.v1
+  - go get github.com/t-yuki/gocover-cobertura
+  - go get github.com/onsi/gomega
+  - go get github.com/onsi/ginkgo
+  - go get golang.org/x/tools/cmd/cover
+  - mkdir -p $GOPATH/src/github.com/Shippable
+  - ln -sfn $PWD $GOPATH/src/github.com/Shippable/sample_go
+  - shippable_retry 'if [ $i -eq 3 ]; then echo "done"; else foobar$i; fi'
+  - mkdir -p shippable/testresults
+  - mkdir -p shippable/codecoverage
+  - echo $foo1
+  - go test -coverprofile=coverage.txt -covermode count ./
+  - $GOPATH/bin/gocover-cobertura < coverage.txt > shippable/codecoverage/coverage.xml
 
 integrations:
   notifications:
